@@ -1456,3 +1456,11 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2026-03-26 20:56:29 [http-nio-8080-exec-10] INFO  c.s.s.controller.ProductController - INFO: Fetching all products
 2026-03-26 20:56:29 [http-nio-8080-exec-10] WARN  c.s.s.controller.ProductController - WARN: Product list might be empty
 2026-03-26 20:56:29 [http-nio-8080-exec-10] ERROR c.s.s.controller.ProductController - ERROR: Exception occurred while fetching products
+2026-03-26 21:04:46 [http-nio-8080-exec-3] DEBUG c.s.s.controller.ProductController - DEBUG: Entering method getProducts()
+2026-03-26 21:04:46 [http-nio-8080-exec-3] INFO  c.s.s.controller.ProductController - INFO: Fetching all products
+2026-03-26 21:04:46 [http-nio-8080-exec-3] WARN  c.s.s.controller.ProductController - WARN: Product list might be empty
+2026-03-26 21:04:46 [http-nio-8080-exec-3] ERROR c.s.s.controller.ProductController - ERROR: Exception occurred while fetching products
+2026-03-26 21:04:46 [http-nio-8080-exec-4] DEBUG c.s.s.controller.ProductController - DEBUG: Entering method getProducts()
+2026-03-26 21:04:46 [http-nio-8080-exec-4] INFO  c.s.s.controller.ProductController - INFO: Fetching all products
+2026-03-26 21:04:46 [http-nio-8080-exec-4] WARN  c.s.s.controller.ProductController - WARN: Product list might be empty
+2026-03-26 21:04:46 [http-nio-8080-exec-4] ERROR c.s.s.controller.ProductController - ERROR: Exception occurred while fetching products
