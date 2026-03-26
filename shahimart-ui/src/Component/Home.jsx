@@ -22,8 +22,10 @@ export default function Home() {
       setProducts(response.data); // Update products state with fetched data
     } catch (error) {
       setError(
-        error.response?.data?.message ||
+        error.response?.data?.errorMessage ||
+          message ||
           "Failed to fetch products. Please try again.",
+        { status: error.status || 500 },
       ); // Extract error message if available
     } finally {
       setLoading(false);
