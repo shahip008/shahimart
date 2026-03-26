@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:localhost": "vite build --mode localhost",
+    "build:dev": "vite build --mode dev",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -15,10 +17,12 @@
     "@fortawesome/free-regular-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^3.2.0",
+    "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/vite": "^4.2.1",
     "axios": "^1.13.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.1",
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.2.1"

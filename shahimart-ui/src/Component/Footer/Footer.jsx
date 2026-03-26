@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -11,14 +12,13 @@ export default function Footer() {
         aria-hidden="true"
       />
       by Prince Shahi
-      <a
-        href="https://eazybytes.com/"
-        target="_blank"
+      <Link
+        to="/"
         rel="noreferrer"
         className="text-primary dark:text-light font-semibold px-1 transition-colors duration-300 hover:text-dark dark:hover:text-lighter"
       >
         shahimart
-      </a>
+      </Link>
     </footer>
   );
 }

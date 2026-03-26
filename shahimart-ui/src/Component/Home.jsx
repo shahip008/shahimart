@@ -50,8 +50,8 @@ export default function Home() {
 
   return (
     <div className="max-w-[1152px] mx-auto px-6 py-8">
-      <PageHeading title="Explore Easy Stickers">
-        Discover fun, creative, and expressive stickers for your chats.
+      <PageHeading title="Shop Smart, Live Better">
+        Find everything you need in one place — simple, stylish, and affordable.
       </PageHeading>
       <ProductListing products={products} />
     </div>

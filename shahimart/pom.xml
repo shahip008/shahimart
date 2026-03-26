@@ -12,6 +12,7 @@
 	<artifactId>shahimart</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shahimart</name>
+	<packaging>jar</packaging>
 	<description>Shopping site </description>
 	<url/>
 	<licenses>
