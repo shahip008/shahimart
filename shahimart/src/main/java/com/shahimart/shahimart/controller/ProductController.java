@@ -19,7 +19,7 @@ import java.util.List;
 public class ProductController {
     private final IProductService iProductService;
     private static final Logger log =
-    LoggerFactory.getLogger(ProductController.class);
+            LoggerFactory.getLogger(ProductController.class);
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getProducts() { // DTO Pattern
@@ -28,7 +28,6 @@ public class ProductController {
         log.info("INFO: Fetching all products");
         log.warn("WARN: Product list might be empty");
         log.error("ERROR: Exception occurred while fetching products");
-        System.out.println("Entering into ProductController  getProducts method fedf");
         List<ProductDto> productList = iProductService.getProducts();
         return ResponseEntity.ok().body(productList);
     }

@@ -21,9 +21,10 @@ export default function Home() {
       const response = await apiClient.get("/products"); // Axios GET Request
       setProducts(response.data); // Update products state with fetched data
     } catch (error) {
+      console.log("Header data fetch error ", error);
       setError(
         error.response?.data?.errorMessage ||
-          message ||
+          error.message ||
           "Failed to fetch products. Please try again.",
         { status: error.status || 500 },
       ); // Extract error message if available
@@ -34,7 +35,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen dark:text-lighter">
         <span className="text-xl font-semibold">Loading products...</span>
       </div>
     );
