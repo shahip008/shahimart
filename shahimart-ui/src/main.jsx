@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./Component/Store/auth-context.jsx";
 import CheckoutForm from "./Component/CheckoutForm.jsx";
 import ProtectedRoute from "./Component/ProtectedRoute.jsx";
-import Profile from "./Component/Profile.jsx";
+import Profile, { profileAction, profileLoader } from "./Component/Profile.jsx";
 import Orders from "./Component/Orders.jsx";
 import AdminOrders from "./Component/Admin/AdminOrders.jsx";
 import Messages from "./Component/Admin/Messages.jsx";
@@ -39,7 +39,15 @@ const routeDefinition = createRoutesFromElements(
     <Route path="/products/:productId" element={<ProductDetails />} />
     <Route element={<ProtectedRoute />}>
       <Route path="/checkout" element={<CheckoutForm />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/profile"
+        element={<Profile />}
+        loader={profileLoader}
+        action={profileAction}
+        shouldRevalidate={({ actionResult }) => {
+          return !actionResult?.success;
+        }}
+      />
       <Route path="/orders" element={<Orders />} />
       <Route path="/admin/orders" element={<AdminOrders />} />
       <Route path="/admin/messages" element={<Messages />} />

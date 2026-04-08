@@ -24,7 +24,7 @@ const Header = () => {
   });
 
   const { totalQuantity } = useCart();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const isAdmin = true;
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
   const [isAdminMenuOpen, setAdminMenuOpen] = useState(false);
@@ -126,7 +126,9 @@ const Header = () => {
               {isAuthenticated ? (
                 <div className="relative" ref={userMenuRef}>
                   <button onClick={toggleUserMenuOpen}>
-                    <span className={navLinkClass}>Welcome User</span>
+                    <span className={navLinkClass}>
+                      {`Hello ${user.name.length > 5 ? `${user.name.slice(0, 6)}...` : user.name}`}
+                    </span>
                     <FontAwesomeIcon
                       icon={faAngleDown}
                       className="text-primary dark:text-light w-6 h-6"

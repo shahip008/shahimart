@@ -1,21 +1,22 @@
 package com.shahimart.shahimart.security;
 
+import com.shahimart.shahimart.filter.JWTTokenValidatorFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.password.CompromisedPasswordChecker;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -42,7 +43,7 @@ public class ShahiMartSecurityConfig {
                 .cors(corsConfig -> corsConfig.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) ->
 //                                requests.requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
-//                                        .requestMatchers("/api/v1/products/**", "/api/v1/contacts/").permitAll()
+//                                            .requestMatchers("/api/v1/products/**", "/api/v1/contacts/").permitAll()
 //                                        .requestMatchers("/api/v1/dummy/**").authenticated()
 //                                        .anyRequest().authenticated()
                         {
@@ -53,6 +54,7 @@ public class ShahiMartSecurityConfig {
                         }
 
                 )
+                .addFilterBefore(new JWTTokenValidatorFilter(publicPaths), BasicAuthenticationFilter.class)
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults())
                 .build();
@@ -61,15 +63,15 @@ public class ShahiMartSecurityConfig {
 //        return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        var user1 = User.builder().username("Prince").password("$2a$12$XwFQblih9NHvwohrJRdb8OOUZjN8.LbjnKn/OlPI5OTSq0Yn8yxAe")
-                .roles("USER").build();
-        var user2 = User.builder().username("admin").password("$2a$12$YvfaOxNFsQ3gZGV40PhPae6dHH5a8K3iP0VB04vrFLfKSc2VpNhYO")
-                .roles("USER", "ADMIN").build();
-        log.debug("Before Returning userDetailsService user1 : " + user1 + " user2 : " + user2);
-        return new InMemoryUserDetailsManager(user1, user2);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        var user1 = User.builder().username("Prince").password("$2a$12$XwFQblih9NHvwohrJRdb8OOUZjN8.LbjnKn/OlPI5OTSq0Yn8yxAe")
+//                .roles("USER").build();
+//        var user2 = User.builder().username("admin").password("$2a$12$YvfaOxNFsQ3gZGV40PhPae6dHH5a8K3iP0VB04vrFLfKSc2VpNhYO")
+//                .roles("USER", "ADMIN").build();
+//        log.debug("Before Returning userDetailsService user1 : " + user1 + " user2 : " + user2);
+//        return new InMemoryUserDetailsManager(user1, user2);
+//    }
 
     //    @Bean
 //    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
@@ -82,13 +84,12 @@ public class ShahiMartSecurityConfig {
 //        return new ProviderManager(daoAuthenticationProvider);
 //    }
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
-                                                       PasswordEncoder passwordEncoder) {
-        log.debug("Entring into authenticationManager userDetailsService : " + userDetailsService + " passwordEncoder " + passwordEncoder);
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        log.debug("authenticationManager daoAuthenticationProvider : " + daoAuthenticationProvider);
-        ProviderManager ProviderManager = new ProviderManager(daoAuthenticationProvider);
+    public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
+        log.debug("Entring into authenticationManager userDetailsService : " + authenticationProvider);
+//        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+//        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+//        log.debug("authenticationManager daoAuthenticationProvider : " + daoAuthenticationProvider);
+        ProviderManager ProviderManager = new ProviderManager(authenticationProvider);
         log.debug("authenticationManager ProviderManager : " + ProviderManager);
         return ProviderManager;
     }
@@ -96,6 +97,11 @@ public class ShahiMartSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CompromisedPasswordChecker compromisedPasswordChecker() {
+        return new HaveIBeenPwnedRestApiPasswordChecker();
     }
 
     @Bean
